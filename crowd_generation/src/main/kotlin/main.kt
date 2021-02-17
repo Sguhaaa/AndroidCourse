@@ -10,16 +10,6 @@ class Wizard(
 class WizardGroupGenerator{
     fun countGenerator() {
 
-        //Определяем верхние и нижние границы
-        var (minWizardCount, maxWizardCount) = readLine()!!.split(' ').map(String::toInt)
-
-        if (minWizardCount == maxWizardCount) {
-            maxWizardCount += 1
-        }
-        if (minWizardCount > maxWizardCount) {
-            minWizardCount = maxWizardCount.also { maxWizardCount = minWizardCount }
-        }
-
         //Генерим волшебников
         fun createWizard(minWizardCount: Int, maxWizardCount: Int) {
 
@@ -63,12 +53,31 @@ class WizardGroupGenerator{
             }
         }
 
+        //Определяем верхние и нижние границы
+
+        fun checkInput(): Int {
+            val num = readLine()?.toIntOrNull()
+            return if(num!=null && num>0) num else 1
+        }
+
+        println("Минимальное количество: ")
+        var minWizardCount = checkInput()
+        println("Максимальное количество: ")
+        var maxWizardCount = checkInput()
+
+        if (minWizardCount == maxWizardCount) {
+            maxWizardCount += 1
+        }
+        if (minWizardCount > maxWizardCount) {
+            minWizardCount = maxWizardCount.also { maxWizardCount = minWizardCount }
+        }
+
         createWizard(minWizardCount, maxWizardCount)
     }
 }
 
 fun main() {
-    println("Введите через пробел два числа для генерации Волшебников:")
+    println("Введите числа для генерации Волшебников")
     val wizardGenerator = WizardGroupGenerator()
     return wizardGenerator.countGenerator()
 }
